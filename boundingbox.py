@@ -2,14 +2,16 @@ import cv2
 import time
 import numpy as np
 import torch
+import os
 from glasses_detector import GlassesClassifier, GlassesDetector
+from GoogleSearch import Search      #remember to run pip install google-reverse-search               
 
 # Initialize the classifier and detector
 classifier = GlassesClassifier()  # Glasses classifier
 detector = GlassesDetector()      # Glasses detector
 
 # Open the video capture (0 for laptop webcam, or 1 for external camera)
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(1)
 
 while True:
     start = time.time()
@@ -65,6 +67,13 @@ while True:
     # Exit the loop when 'q' is pressed
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
+
+    # Search image when pressed (runs, but does not work, might not be finding image, idk)
+    if cv2.waitKey(1) & 0xFF == ord('s'):
+        path = os.path.abspath("found_glasses.jpg")
+        Output = Search(file_path=path)
+
+        print(Output)
 
 # Release the video capture and close all OpenCV windows
 cap.release()
